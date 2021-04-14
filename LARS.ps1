@@ -38,7 +38,7 @@ $xmlFileList = Get-ChildItem "XML\*.xml"
 
 # $searchterms is a comma separated list (array) of the terms to search for.
 # $searchterms = "registered mail", "facsimile"
-$searchterms = "r1egistered mail", "facsimile"
+$searchterms = "registered mail", "facsimile"
 
 
 # Get-LegisRef returns the legislative reference for the XML object passed to it. May require some tuning as the
