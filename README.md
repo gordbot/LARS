@@ -1,14 +1,26 @@
-# Legislation and Regulation Search - LARS
+# Legislation and Regulation Search - LARS #
 
-This script is designed to search through legislative/regulatory XML files from the Justice.gc.ca website for a given 
-set of search terms, and pass back a CSV formatted output like: Title of Legislation, Legislative Provision Reference, Search Term Found
+This script is designed to search through legislative/regulatory XML files from the [Department of Justice Laws website](https://justice.gc.ca) for a given set of search terms and pass back a CSV formatted output like in the form:
+```Title of Legislation```, ```Legislative Provision Reference```, ```Search Term Found```
 
-## Usage
-Change the path in $xmlFileList to a single file or a file glob.
+## Example ##
 
-Change the $searchterms array to include a comma separated list of search terms as quoted strings.
+To search the [Income Tax Regulations](https://laws-lois.justice.gc.ca/eng/regulations/C.R.C.,_c._945/index.html) for the term "remuneration" you download the [Income Tax Regulations XML](https://laws-lois.justice.gc.ca/eng/XML/C.R.C.,_c._945.xml) and set
 
-The script will search each XML file in the list of XML files and check to see if any of the search terms can 
-be found in the legislation or regulations.  If a match is found, the function recursively works through the parent nodes yielding a full legislative reference to the lowest level occurence of the search term.
+```$xmlFileList = Get-ChildItem "/path/to/file.xml"``` and set the search term:
+```$searchterm = "remuneration"```
 
-The script can handle search terms in definition subsections by providing a reference to the section with the definitions and then an optional refernce to the exact use of the term in a pargraphed definition.
+When you run, the script will the following information for every occurence of the search term within the XML file or files you are searching.
+
+The format of the output is comma separated values like"
+```Title of Legislation```, ```Legislative Provision Reference```, ```Search Term Found```
+
+You can also search for multiple search terms and multiple files.  For example, to search all downloaded XML files for "permit" and "licence" you download the XML files for every act or regulation you want to search and then change
+
+```$xmlFileList = Get-ChildItem "/path/to/*.xml"``` and set the search term:
+```$searchterm = "permit", "licence```
+
+## Authors ##
+
+- [Gordon D. Bonnar](https://www.github.com/gordbot)
+- [Cody Bonnar](https://github.com/cbonnar)
