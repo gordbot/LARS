@@ -1,7 +1,7 @@
 # Legislation and Regulation Search - LARS
 
 This script is designed to search through legislative/regulatory XML files from the Justice.gc.ca website for a given 
-set of search terms, and pass back a CSV formatted output like: Title of Legislation, Legislative Reference, Search Term Found
+set of search terms, and pass back a CSV formatted output like: Title of Legislation, Legislative Provision Reference, Search Term Found
 
 ## Usage
 Change the path in $xmlFileList to a single file or a file glob.
