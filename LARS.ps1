@@ -64,9 +64,13 @@ function Get-LegisRef {
     } elseif($legisobject.name -eq "Definition") {
         # Text nodes inside Definition nodes contain child nodes themselves, requiring the parsing below.
         (Get-LegisRef $legisobject.ParentNode) + $legisobject.label + " - Definition of: " + $legisobject.Text.DefinedTermEn
+    } elseif($legisobject.name -eq "FormulaDefinition") {
+        # Text nodes inside Formula Definition nodes contain child nodes themselves, requiring the parsing below.
+        (Get-LegisRef $legisobject.ParentNode) + $legisobject.label + " - Formula definition of: " + $legisobject.FormulaTerm
     } else {
         # This concatenates the legislative reference text as the recursive function works its way up the chain.
-        (Get-LegisRef $legisobject.ParentNode) + $legisobject.label
+        try { (Get-LegisRef $legisobject.ParentNode) + $legisobject.label }
+        catch { Write-Host $legisobject.label }
     }
 }
 
@@ -77,9 +81,9 @@ function SearchLeg {
         $xmlElm,
         $searchterm
     )
-    # Looks for each node containing a text node, passes that to a where-object that checks 
+    # Looks for each node containing a text node, passes that to a where-object that checks
     # if the text or innertext (in the case of text nodes containing child nodes) contains the search term
-    # and then passes the node to Get-LegisRef. 
+    # and then passes the node to Get-LegisRef.
     $xmlElm.SelectNodes('//Text').ParentNode | ? { if($_.Text.GetType().Name -eq "XmlElement") { $_.InnerText -match $searchterm } else { $_.Text -match $searchterm } } | % { Get-LegisRef $_ }
 }
 
@@ -98,7 +102,7 @@ foreach($xmlFile in $xmlFileList) {
     }
 
     #$title # Used for debugging
-    
+
     #Loops through each term in $searchterms.
     foreach ($term in $searchterms) {
         #"----- " + $term + " -----" # Used for debugging
