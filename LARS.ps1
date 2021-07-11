@@ -47,8 +47,13 @@ function Get-LegisRef {
     param (
         $legisobject
     )
-    if($legisobject.name -eq "Section") {
-        return $legisobject.label
+    if($legisobject.name -eq "Section" -or $legisobject.name -eq "Order") {
+        #Some section labels have footnote references so you need innertext in those scenarios.
+        if(($legisobject.label.GetType()).Name -eq "XmlElement") {
+            return $legisobject.label.InnerText
+        } else {
+            return $legisobject.label
+        }
     } elseif($legisobject.name -eq "Schedule") {
         if(($legisobject.ScheduleFormHeading.label.GetType()).Name -eq "XmlElement") {
             # Some acts/legislation have bilingual language labels which requires parsing the below parsing.
