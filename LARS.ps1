@@ -88,11 +88,11 @@ function SearchLeg {
 }
 
 
-#Loops through each XML file for each piece of legislation/regulation.
+#Loops through each XML file for each piece of legislation.
 foreach($xmlFile in $xmlFileList) {
-    [xml]$xml = Get-Content $xmlFile # Opening the XML file
+    [xml]$xml = Get-Content $xmlFile
 
-    # Determining the title of the legislation/regulation.
+    # Determining the title of the legislation.
     if($xml.SelectNodes('//ShortTitle')."#text") {
         $title = $xml.SelectNodes('//ShortTitle')."#text"
     } elseif($xml.SelectNodes('//LongTitle')."#text") {
@@ -101,11 +101,7 @@ foreach($xmlFile in $xmlFileList) {
         $title = $xmlFile
     }
 
-    #$title # Used for debugging
-
-    #Loops through each term in $searchterms.
     foreach ($term in $searchterms) {
-        #"----- " + $term + " -----" # Used for debugging
         # Passes the output from SearchLeg into a foreach loop that prints out CSV formatted data for the title of the legislation, the section, and the term found.
         SearchLeg -searchterm $term -xmlElm $xml | % { "`"$title`"" + "," + "`"$_`"" +","+ "`"$term`"" } | sort -unique
     }
