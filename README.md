@@ -23,4 +23,4 @@ You can also search for multiple search terms and multiple files.  For example, 
 ## Authors ##
 
 - [Gordon D. Bonnar](https://www.github.com/gordbot)
-- [Cody Bonnar](https://github.com/cbonnar)
+- [Claire Bonnar](https://github.com/cbonnar)
